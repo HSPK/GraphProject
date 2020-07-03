@@ -68,8 +68,8 @@ float freemanNetworkCentrality(char name[])
     double cd;
     AdjGraph g;
     g = createAdj(name);
-    freopen("out.txt", "w", stdout);
-    printGraph(g);
+    //freopen("out.txt", "w", stdout);
+    //printGraph(g);
     long cd1 = (long)(g->n - 1) * (g->n - 2);
     //printf("%ld", cd1);
     long max = -1;
@@ -86,11 +86,11 @@ float freemanNetworkCentrality(char name[])
             }
         }
     }
-    printf("%ld %ld %ld\n", cd1, max, sum);
+    //printf("%ld %ld %ld\n", cd1, max, sum);
     sum = g->n * max - sum;
     cd = (double)sum / cd1;
-    printf("\n");
-    printGraph(g);
-    printf("%.15lf\n", cd);
+    //printf("\n");
+    //printGraph(g);
+    //printf("%.15lf\n", cd);
     return (float)cd;
 }
