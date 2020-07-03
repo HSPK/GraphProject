@@ -55,6 +55,7 @@ void graphStats(int argc, char *argv[])
         return;
     }
     num_type n;
+    float fnc;
     switch (matchCmd(argv[4]))
     {   
         case 11:        //edges
@@ -65,7 +66,10 @@ void graphStats(int argc, char *argv[])
             n = numberOfVertices(argv[2]);
             printf("%d\n", n);
             break;
-        
+        case 13:     //freeman
+            fnc = freemanNetworkCentrality(argv[2]);
+            printf("%f\n", fnc);
+            break;
         default:
             printf("stats: unsopported arg: %s\n", argv[4]);
             break;
