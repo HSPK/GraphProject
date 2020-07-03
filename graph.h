@@ -32,5 +32,6 @@ typedef struct
 typedef adjGraph* AdjGraph;
 
 AdjGraph createAdj(char *name);
+void printGraph(AdjGraph g);
 
 #endif

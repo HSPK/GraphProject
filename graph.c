@@ -1,6 +1,22 @@
 #include "graph.h"
 #include "config.h"
 
+void printGraph(AdjGraph g)
+{
+    for (int i = 0; i < MAXV; i++) {
+        if (g->adj[i].num != -1) {
+            printf("%d: ", i);
+            Anode *p;
+            p = g->adj[i].firstarc;
+            while (p != NULL) {
+                printf("-> %d ", p->no);
+                p = p->nextarc;
+            }
+            printf("\n");
+        }
+    }
+}
+
 AdjGraph createAdj(char *name) 
 {
     AdjGraph g = (AdjGraph)malloc(sizeof(adjGraph));
