@@ -17,6 +17,20 @@ void printGraph(AdjGraph g)
     }
 }
 
+void printGraphList(AdjGraph g)
+{
+    for (int i = 0; i < MAXV; i++) {
+        if (g->adj[i].num > 0) {
+            Anode *p;
+            p = g->adj[i].firstarc;
+            while (p != NULL) {
+                printf("%d %d %d\n", i, p->no, p->weight);
+                p = p->nextarc;
+            }
+        }
+    }
+}
+
 AdjGraph createAdj(char *name) 
 {
     AdjGraph g = (AdjGraph)malloc(sizeof(adjGraph));

@@ -33,5 +33,6 @@ typedef adjGraph* AdjGraph;
 
 AdjGraph createAdj(char *name);
 void printGraph(AdjGraph g);
+void printGraphList(AdjGraph g);
 
 #endif
