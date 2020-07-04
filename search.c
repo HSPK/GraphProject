@@ -76,19 +76,36 @@ void DFS(AdjGraph g, int u, int v,int *path)
     }
 }
 
-void processPath(int *path, int u, int v)
+char* processPath(int *path, int u, int v)
 {
+    char *s = (char *)malloc(sizeof(char) * MAX_PATH_LEN);
+    char con[] = " >- ";
+    char *b; char *a;
     if (path[v] == 0) {
         printf("path doesn't exist!!!\n");
-        return;
+        return NULL;
     }
     int i = v;
+    long j = 0;
     while (i != path[i])
     {
-        printf("%d <- ", i);
+        b = itos(i);
+        while (*b) {
+            s[j++] = *b++;
+        }
+        a = con;
+        while (*a) {
+            s[j++] = *a++;
+        }
         i = path[i];
     }
-    printf("%d", i);
+    b = itos(i);
+    while (*b) {
+        s[j++] = *b++;
+    }
+    s[j] = '\0';
+    reverse(s, 0, j - 1);
+    return s;
 }
 
 char* shortestPath(int u, int v, char algorithm[], char name[])
@@ -107,15 +124,15 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
     {
         case 0 :            //DFS
             DFS(g, u, v, path);
-            processPath(path, u, v);
+            return processPath(path, u, v);
             break;
         case 1 :
             BFS(g, u, v, path);
             break;
         case 2 :            //DIJ
             cost = Dijkstra(g, u, v, path);
-            processPath(path, u, v);
-            printf("\n%d", cost);
+            printf("cost: %d\n", cost);
+            return processPath(path, u, v);
             break;
         default:
             printf("unsupported alg: %s\n", algorithm);
