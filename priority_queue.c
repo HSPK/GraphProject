@@ -114,6 +114,12 @@ static void priority_queue_adjust_head(PriorityQueue *pq)
     parent = left = right = 0;
     priority_queue_swap(pq->_nodes, 0, pq->_size - 1);
     pq->_size--;
+    if (pq->_size == 2) {
+        if (priority_queue_compare(pq, 0, 1) > 0) {
+            priority_queue_swap(pq->_nodes, 0, 1);
+        }
+        return;
+    }
     while (i < (pq->_size - 1) / 2)     
     {
         parent = i;
