@@ -1,8 +1,19 @@
 #include "main.h"             
+#include "priority_queue.h"
+
+static int matchCmd(char *c);
 
 int main(int argc, char const *argv[])
 {
     init();
+    // PriorityQueue *pq = priority_queue_new(PRIORITY_MIN);
+
+    // int a[] = {4 ,5, 6 ,6, 333, 23, 334};
+    // for (int i = 0; i < sizeof(a) / sizeof(int); i++) {
+    //     KeyValue *kv = key_value_new(a[i], NULL);
+    //     priority_queue_enqueue(pq, kv);
+    // }
+    // priority_queue_print(pq);
     process(argc, (char **)argv);
     return 0;
 }
@@ -41,11 +52,26 @@ void processGraph(int argc, char *argv[])
     case 5:
         graphStats(argc, argv);
         break;
-    
+    case 9:
+    case 10:
+        graphPath(argc, argv);
+        break;
     default:
         printf("graph: cmd error!!!\n");
         break;
     }
+}
+
+void graphPath(int argc, char *argv[])
+{
+    id_type u, v;
+    if (argc < 9) {
+        printf("args too few!!!\n");
+        return;
+    }
+    u = stoi(argv[6]);
+    v = stoi(argv[8]);
+    shortestPath(u, v, argv[4], argv[2]);
 }
 
 void graphStats(int argc, char *argv[])
@@ -86,17 +112,7 @@ void printSuantou()
 
 }
 
-int strcmp(char *p, char *q) 
-{
-    char *a = p;
-    char *b = q;
-    while (!(*a - *b) && *b != '\0') {
-        a++; b++;
-    }
-    return *a - *b;
-}
-
-int matchCmd(char *c)
+static int matchCmd(char *c)
 {
     for (int i = 0; i < cmd_num; i++) {
         if (strcmp(c, (char *)cmd_table[i]) == 0) {
