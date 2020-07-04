@@ -4,7 +4,9 @@
 #include "config.h"
 #include "graph.h"
 #include "stats.h"
+#include "util.h"
 #include "search.h"
+
 #define MAX_CMD_LEN 50   
 const char readme[] = "you guess how to use this tool!!!\n";
 
@@ -23,12 +25,11 @@ const int cmd_num = sizeof(cmd_table) / MAX_CMD_LEN;
 
 
 void process(int argc, char *argv[]);
-int strcmp(char *p, char *q);
-int matchCmd(char *c);
 void init();
 void processGraph(int argc, char *argv[]);
 void graphPath(int argc, char *argv[]);
 void graphStats(int argc, char *argv[]);
+void graphPath(int argc, char *argv[]);
 void printSuantou();
 
 #endif
