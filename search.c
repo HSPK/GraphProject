@@ -27,7 +27,6 @@ int Dijkstra(AdjGraph g, int u, int w, int* path)
     PriorityQueue *pq = priority_queue_new(PRIORITY_MIN);
     dis[u] = 0;
     path[u] = u;
-    //printGraph(g);
     KeyValue *kv = key_value_new(dis[u], int_new(u));
     priority_queue_enqueue(pq, kv);
     
@@ -36,10 +35,8 @@ int Dijkstra(AdjGraph g, int u, int w, int* path)
         kv = priority_queue_dequeue(pq);
         u = *(int *)kv->_value;
         dis[u] = kv->_key;
-        //printf("de: %d %d\n", u, dis[u]);
 
         if (u == w) {
-            //priority_queue_print(pq);
             return dis[u];
         }
 
@@ -50,7 +47,6 @@ int Dijkstra(AdjGraph g, int u, int w, int* path)
                 dis[v] = dis[u] + p->weight;
                 path[v] = u;
                 kv = key_value_new(dis[v], int_new(v));
-                //printf("en: %d %d\n", v, dis[v]);
                 priority_queue_enqueue(pq, kv);
             }
             p = p->nextarc;
@@ -83,7 +79,7 @@ void DFS(AdjGraph g, int u, int v,int *path)
 void processPath(int *path, int u, int v)
 {
     if (path[v] == 0) {
-        printf("path not exist!!!\n");
+        printf("path doesn't exist!!!\n");
         return;
     }
     int i = v;
@@ -111,9 +107,12 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
     {
         case 0 :            //DFS
             DFS(g, u, v, path);
-            //processPath(path, u, v);
+            processPath(path, u, v);
             break;
-        case 1 :            //BFS
+        case 1 :
+            BFS(g, u, v, path);
+            break;
+        case 2 :            //DIJ
             cost = Dijkstra(g, u, v, path);
             processPath(path, u, v);
             printf("\n%d", cost);
