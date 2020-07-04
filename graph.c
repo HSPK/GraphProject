@@ -9,7 +9,7 @@ void printGraph(AdjGraph g)
             Anode *p;
             p = g->adj[i].firstarc;
             while (p != NULL) {
-                printf("-> %d ", p->no);
+                printf("-> %d(%d) ", p->no, p->weight);
                 p = p->nextarc;
             }
             printf("\n");
