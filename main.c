@@ -81,10 +81,10 @@ void graphPath(int argc, char *argv[])
 		return;
 	}
 	char *path;
-	int u = argv[6] - '0';
-	int v = argv[8] - '0';
+	int u = *argv[6] - '0';
+	int v = *argv[8] - '0';
 	path = shortestPath(u, v, argv[4], argv[2]); 
-	printf("%s",path);
+//	printf("%s",path);
 
 }
 void init()
