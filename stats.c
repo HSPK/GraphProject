@@ -90,7 +90,7 @@ float freemanNetworkCentrality(char name[])
     sum = g->n * max - sum;
     cd = (double)sum / cd1;
     //printf("\n");
-    //printGraph(g);
+    //printGraphList(g);
     //printf("%.15lf\n", cd);
     return (float)cd;
 }
