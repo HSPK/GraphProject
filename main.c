@@ -41,7 +41,10 @@ void processGraph(int argc, char *argv[])
     case 5:
         graphStats(argc, argv);
         break;
-    
+	case 9:
+	case 10:
+	    graphPath(argc, argv);
+	    break;	
     default:
         printf("graph: cmd error!!!\n");
         break;
@@ -71,7 +74,19 @@ void graphStats(int argc, char *argv[])
             break;
     }
 }
+void graphPath(int argc, char *argv[])
+{
+	if (argc < 9) {
+		printf("args too few!!!\n");
+		return;
+	}
+	char *path;
+	int u = argv[6] - '0';
+	int v = argv[8] - '0';
+	path = shortestPath(u, v, argv[4], argv[2]); 
+	printf("%s",path);
 
+}
 void init()
 {
 
