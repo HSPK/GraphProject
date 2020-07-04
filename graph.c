@@ -28,7 +28,10 @@ AdjGraph createAdj(char *name)
     }
     FILE *file;
     file = fopen(name, "r");
-    
+    if (file == NULL) {
+        printf("file open error!!!\n");
+        exit(1);
+    }
     id_type u, v;
     weight_type w;
     Anode *p;
