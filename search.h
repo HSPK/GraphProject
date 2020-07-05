@@ -1,8 +1,5 @@
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
-#include "config.h"
-#include "stats.h"
-#include "main.h"
 #define MAX_PATH_LEN 1000000
 #define MAX_ALG_LEN 15
 

@@ -1,49 +1,5 @@
+
 #include "search.h"
-/*<<<<<<< HEAD
-char* shortestPath(int u, int v, char algorithm[], char name[])
-{
-    AdjGraph g;
-    g = createAdj(name);
-	int p[5000000];
-	char *path;
-	switch(matchCmd(algorithm[])) {
-		case 15:
-		    DFS(u, v, g, 0);
-			break;
-		case 16:
-
-			break;
-		case 17:
-
-			break;
-	}
-	return NULL;
-
-
-}
-int visited[1000000] = { 0 };
-void DFS(int u, int v, AdjGraph g,int d,int path[]) 
-{
-	int w, i;
-	Anode *p;
-	path[d++] = u;
-	visited[u] = 1;
-	if (u == v && d > 0) {
-		for (i = 0; i < d; i++)
-	    	printf("%2d->", path[i]);
-		printf("\n");
-	    return;
-	}
-	p = g->adj[u].firstarc;
-    while (p != NULL) {
-		w = p->no;
-		if (visited[w] == 0)
-			DFS(w, v, g, d, path);
-		p = p->nextarc;															
-	}
-}
-
-=======*/
 #include "graph.h"
 #include "config.h"
 #include "util.h"
@@ -99,9 +55,51 @@ int Dijkstra(AdjGraph g, int u, int w, int* path)
     }
 }
 
+
+
 void BFS(AdjGraph g, int u, int v, int *path)
 {
-
+    int qu[MAXV];
+    int rear = -1;
+    int front = -1;
+    qu[++rear] = u;
+    visited[u] = 1;
+    int w;
+    int weight[MAXV] = {0};
+    weight[u] = 1;
+    path[u] = -1;
+    while (front != rear) {
+        w = qu[++front];
+        if (w == v) {
+            while (w != -1) {
+                printf("<-%d", w);
+                w = path[w];
+            }
+            return;
+        }
+        if (weight[w]!=1) {
+            qu[++rear] = w;
+            weight[w]--;
+            continue;
+        }
+        Anode *p;
+        p = g->adj[w].firstarc;
+        while (p != NULL) {
+            if (visited[p->no] == 1) {
+                if (weight[p->no] > p->weight) {
+                    weight[p->no] = p->weight;
+                    path[p->no] = w;    
+                }
+                p = p->nextarc;
+                continue;
+            }
+            weight[p->no] = p->weight;
+            qu[++rear] = p->no;
+            visited[p->no] = 1;
+            path[p->no] = w;
+            p = p->nextarc;
+        }
+    }
 }
 
 void DFS(AdjGraph g, int u, int v,int *path)
@@ -115,7 +113,7 @@ void DFS(AdjGraph g, int u, int v,int *path)
     while (p != NULL) {
         if (visited[p->no] == 0) {
             path[p->no] = u;
-            DFS(g, p->no, v,path);
+            DFS(g, p->no, v, path);
         }
         p = p->nextarc;
     }
@@ -148,6 +146,7 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
         exit(1);
     } 
     path[u] = u;
+
     switch (matchAlg(algorithm))
     {
         case 0 :            //DFS
@@ -177,4 +176,3 @@ static int matchAlg(char *c)
     }
     return -1;
 }
-//>>>>>>> way
