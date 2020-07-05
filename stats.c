@@ -29,7 +29,7 @@ int numberOfVertices(char name[])
     return n;
 }
 
-void deleteI(Vnode *v, id_type id)
+void deleteI(AdjGraph g, Vnode *v, id_type id)
 {
     Anode *p, *pre;
     pre = v->firstarc;
@@ -38,7 +38,7 @@ void deleteI(Vnode *v, id_type id)
     if (pre->no == id) {
         v->firstarc = pre->nextarc;
         v->outDegree--;
-        v->inDegree--;
+        g->adj[id].inDegree--;
         free(pre);
         return;
     }
@@ -47,7 +47,7 @@ void deleteI(Vnode *v, id_type id)
         if (p->no == id) {
             pre->nextarc = p->nextarc;
             v->outDegree--;
-            v->inDegree--;
+            g->adj[id].inDegree--;
             free(p);
             return;
         }
@@ -62,7 +62,7 @@ void deleteDupVer(AdjGraph g)
         if (g->adj[i].outDegree > 0) {
             Anode *p = g->adj[i].firstarc;
             while (p != NULL) {
-                deleteI(&g->adj[p->no], i);
+                deleteI(g, &g->adj[p->no], i);
                 //printGraph(g);
                 //printf("\n");
                 p = p->nextarc;
@@ -87,7 +87,7 @@ float freemanNetworkCentrality(char name[])
     deleteDupVer(g);
     for (int i = 0; i < MAXV; i++) {
         num = g->adj[i].outDegree;
-        if (num > 0) {
+        if (num >= 0) {
             //printf("%d:%d\n", i, num);
             num2 = num + g->adj[i].inDegree;
             sum += 2 * num;
@@ -97,10 +97,10 @@ float freemanNetworkCentrality(char name[])
         }
     }
     sum = g->n * max - sum;
-    printf("分子：%ld 分母：%ld 最大度:%ld\n", sum, cd1, max);
+    //printf("分子：%ld 分母：%ld 最大度:%ld %d\n", sum, cd1, max, maxi);
     cd = (double)sum / cd1;
     //printf("\n");
-    //printGraphList(g);
+    //printGraph(g);
     //printf("%.15lf\n", cd);
     return (float)cd;
 }
