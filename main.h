@@ -23,6 +23,7 @@ const char cmd_table[][MAX_CMD_LEN] = {"-h", "--help", "-g", "--graph",
                                 };
 const int cmd_num = sizeof(cmd_table) / MAX_CMD_LEN;
 
+const char suantou[] = {};
 
 void process(int argc, char *argv[]);
 void init();

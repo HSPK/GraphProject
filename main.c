@@ -14,6 +14,7 @@ int main(int argc, char const *argv[])
     //     priority_queue_enqueue(pq, kv);
     // }
     // priority_queue_print(pq);
+    
     process(argc, (char **)argv);
     return 0;
 }
@@ -35,6 +36,7 @@ void process(int argc, char *argv[])
             break;
         case 8:         //suantou
             printSuantou();
+            break;
         default:
             printf("could not find command:%s\n", argv[1]);
     }
@@ -71,7 +73,10 @@ void graphPath(int argc, char *argv[])
     }
     u = stoi(argv[6]);
     v = stoi(argv[8]);
-    shortestPath(u, v, argv[4], argv[2]);
+    char *path = shortestPath(u, v, argv[4], argv[2]);
+    while (*path) {
+        putchar(*path++);
+    }
 }
 
 void graphStats(int argc, char *argv[])
@@ -121,7 +126,12 @@ void init()
 
 void printSuantou()
 {
-
+    freopen("suantou.h", "r", stdin);
+    //FILE *file = fopen("2.txt", stdin); 
+    char c;
+    while ((c = getchar()) != EOF) {
+        putchar(c);
+    }
 }
 
 static int matchCmd(char *c)
