@@ -171,7 +171,7 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
             break;
         case 2 :            //DIJ
             cost = Dijkstra(g, u, v, path);
-            printf("cost: %d\n", cost);
+            //printf("cost: %d\n", cost);
             return processPath(path, u, v);
             break;
         default:
