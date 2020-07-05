@@ -5,7 +5,7 @@ void printGraph(AdjGraph g)
 {
     for (int i = 0; i < MAXV; i++) {
         if (g->adj[i].outDegree != -1) {
-            printf("%d: ", i);
+            printf("%d (%d, %d): ", i, g->adj[i].inDegree, g->adj[i].outDegree);
             Anode *p;
             p = g->adj[i].firstarc;
             while (p != NULL) {
