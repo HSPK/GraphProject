@@ -28,7 +28,7 @@ const char suantou[] = {};
 void process(int argc, char *argv[]);
 void init();
 void processGraph(int argc, char *argv[]);
-void processGraph(int argc, char *argv[]);
+void graphPath(int argc, char *argv[]);
 void graphStats(int argc, char *argv[]);
 void graphPath(int argc, char *argv[]);
 void printSuantou();

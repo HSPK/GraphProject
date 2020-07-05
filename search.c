@@ -1,3 +1,4 @@
+
 #include "search.h"
 #include "graph.h"
 #include "config.h"
@@ -11,7 +12,7 @@ static int *int_new(int value);
 static const int inf = 0x3f3f3f3f;
 
 
-uint8 visited[MAXV] = {0, };
+uint8 visited[MAXV] = {0 };
 
 static int *int_new(int value)
 {
@@ -58,7 +59,42 @@ int Dijkstra(AdjGraph g, int u, int w, int* path)
 
 void BFS(AdjGraph g, int u, int v, int *path)
 {
-
+	int *qu = (int *)malloc(sizeof(int)*MAXV);
+	int *weight = (int*)malloc(sizeof(int)*MAXV);
+    int rear = -1;
+    int front = -1;
+    qu[++rear] = u;
+    visited[u] = 1;
+    int w = u;
+    weight[u] = 1;
+    while (front != rear) {
+        w = qu[++front];
+        if (w == v) {
+            return;
+        }
+        if (weight[w] != 1) {
+            qu[++rear] = w;
+            weight[w]--;
+            continue;
+        }
+        Anode *p;
+        p = g->adj[w].firstarc;
+        while (p != NULL) {
+            if (visited[p->no] == 1) {
+                if (weight[p->no] > p->weight) {
+                    weight[p->no] = p->weight;
+                    path[p->no] = w;    
+                }
+                p = p->nextarc;
+                continue;
+            }
+            weight[p->no] = p->weight;
+            qu[++rear] = p->no;
+            visited[p->no] = 1;
+            path[p->no] = w;
+            p = p->nextarc;
+        }
+    }
 }
 
 void DFS(AdjGraph g, int u, int v,int *path)
@@ -72,7 +108,7 @@ void DFS(AdjGraph g, int u, int v,int *path)
     while (p != NULL) {
         if (visited[p->no] == 0) {
             path[p->no] = u;
-            DFS(g, p->no, v,path);
+            DFS(g, p->no, v, path);
         }
         p = p->nextarc;
     }
@@ -122,6 +158,7 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
         exit(1);
     } 
     path[u] = u;
+
     switch (matchAlg(algorithm))
     {
         case 0 :            //DFS
@@ -130,6 +167,7 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
             break;
         case 1 :
             BFS(g, u, v, path);
+			return processPath(path, u, v);
             break;
         case 2 :            //DIJ
             cost = Dijkstra(g, u, v, path);
