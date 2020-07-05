@@ -54,7 +54,7 @@ void processGraph(int argc, char *argv[])
     case 5:
         graphStats(argc, argv);
         break;
-    case 9:
+    case 9:        //path
     case 10:
         graphPath(argc, argv);
         break;
@@ -99,6 +99,10 @@ void graphStats(int argc, char *argv[])
             break;
         case 13:     //freeman
             fnc = freemanNetworkCentrality(argv[2]);
+            printf("%f\n", fnc);
+            break;
+        case 14:        //closeness
+            fnc = closenessCentrality(argv[2], stoi(argv[5]));
             printf("%f\n", fnc);
             break;
         default:

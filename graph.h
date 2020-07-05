@@ -20,7 +20,8 @@ typedef struct anode
 typedef struct vnode
 {
     info_type info;
-    num_type num;
+    num_type outDegree;
+    num_type inDegree;
     Anode *firstarc;
 }Vnode;
 

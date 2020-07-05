@@ -6,12 +6,14 @@
 
 const char alg_table[][MAX_ALG_LEN] = {"DFS", "BFS", "Dijkstra"};
 const int alg_num = sizeof(alg_table) / MAX_ALG_LEN;
-const int inf = 0x3f3f3f3f;
 static int matchAlg(char *c);
+static int *int_new(int value);
+static const int inf = 0x3f3f3f3f;
+
 
 uint8 visited[MAXV] = {0, };
 
-int *int_new(int value)
+static int *int_new(int value)
 {
     int *p = (int *)malloc(sizeof(int));
     *p = value;
@@ -34,7 +36,7 @@ int Dijkstra(AdjGraph g, int u, int w, int* path)
         Anode *p;
         kv = priority_queue_dequeue(pq);
         u = *(int *)kv->_value;
-        dis[u] = kv->_key;
+        //dis[u] = kv->_key > dis[u] ? dis[u] : kv->_key;
 
         if (u == w) {
             return dis[u];
@@ -115,7 +117,7 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
     id_type path[MAX_PATH_LEN];
     int cost;
     //char path[MAX_PATH_LEN] = {0, };
-    if (g->adj[u].num == -1 || g->adj[v].num == -1) {
+    if (g->adj[u].outDegree == -1 || g->adj[v].outDegree == -1) {
         printf("vertices not exist!!!\n");
         exit(1);
     } 
