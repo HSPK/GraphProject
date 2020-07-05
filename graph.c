@@ -4,7 +4,7 @@
 void printGraph(AdjGraph g)
 {
     for (int i = 0; i < MAXV; i++) {
-        if (g->adj[i].num != -1) {
+        if (g->adj[i].outDegree != -1) {
             printf("%d: ", i);
             Anode *p;
             p = g->adj[i].firstarc;
@@ -20,7 +20,7 @@ void printGraph(AdjGraph g)
 void printGraphList(AdjGraph g)
 {
     for (int i = 0; i < MAXV; i++) {
-        if (g->adj[i].num > 0) {
+        if (g->adj[i].outDegree > 0) {
             Anode *p;
             p = g->adj[i].firstarc;
             while (p != NULL) {
@@ -38,7 +38,8 @@ AdjGraph createAdj(char *name)
 
     for (int i = 0; i < MAXV; i++) {
         g->adj[i].firstarc = NULL;
-        g->adj[i].num = -1;
+        g->adj[i].outDegree = -1;
+        g->adj[i].inDegree = 0;
     }
     FILE *file;
     file = fopen(name, "r");
@@ -51,15 +52,16 @@ AdjGraph createAdj(char *name)
     Anode *p;
     while (fscanf(file, "%d%d%d", &u, &v, &w) != EOF) {
         m++;
-        if (g->adj[u].num == -1) {
+        if (g->adj[u].outDegree == -1) {
             n++;
-            g->adj[u].num = 0;
+            g->adj[u].outDegree = 0;
         }
-        if (g->adj[v].num == -1) {
+        if (g->adj[v].outDegree == -1) {
             n++;
-            g->adj[v].num = 0;
+            g->adj[v].outDegree = 0;
         }
-        g->adj[u].num++;
+        g->adj[u].outDegree++;
+        g->adj[v].inDegree++;
         p = (Anode *)malloc(sizeof(Anode));
         p->no = v; p->weight = w;
         p->nextarc = g->adj[u].firstarc;
