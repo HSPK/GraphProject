@@ -12,7 +12,7 @@ static int *int_new(int value);
 static const int inf = 0x3f3f3f3f;
 
 
-uint8 visited[MAXV] = {0, };
+uint8 visited[MAXV] = {0 };
 
 static int *int_new(int value)
 {
@@ -57,29 +57,22 @@ int Dijkstra(AdjGraph g, int u, int w, int* path)
     }
 }
 
-
-
 void BFS(AdjGraph g, int u, int v, int *path)
 {
-    int qu[MAXV];
+	int *qu = (int *)malloc(sizeof(int)*MAXV);
+	int *weight = (int*)malloc(sizeof(int)*MAXV);
     int rear = -1;
     int front = -1;
     qu[++rear] = u;
     visited[u] = 1;
-    int w;
-    int weight[MAXV] = {0};
+    int w = u;
     weight[u] = 1;
-    path[u] = -1;
     while (front != rear) {
         w = qu[++front];
         if (w == v) {
-            while (w != -1) {
-                printf("<-%d", w);
-                w = path[w];
-            }
             return;
         }
-        if (weight[w]!=1) {
+        if (weight[w] != 1) {
             qu[++rear] = w;
             weight[w]--;
             continue;
@@ -174,6 +167,7 @@ char* shortestPath(int u, int v, char algorithm[], char name[])
             break;
         case 1 :
             BFS(g, u, v, path);
+			return processPath(path, u, v);
             break;
         case 2 :            //DIJ
             cost = Dijkstra(g, u, v, path);
